@@ -1,3 +1,7 @@
 {
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "*.twee": "twee3-sugarcube-2",
+        "variant": "cpp"
+    }
 }
