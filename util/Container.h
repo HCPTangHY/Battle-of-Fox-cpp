@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 #include <stdexcept>
+#include <iostream>
 
 // 前向声明
 class Dict;
@@ -60,7 +61,30 @@ public:
             data.erase(data.begin() + index);
         }
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const Array& arr);
 };
+std::ostream& operator<<(std::ostream& os, const Array& arr) {
+    os.put('[');
+    for (size_t i = 0; i < arr.data.size(); i++) {
+        std::visit([&os](const auto& val) {
+            if constexpr (std::is_same_v<std::decay_t<decltype(val)>, std::shared_ptr<Dict>>) {
+                os << "<Dict:" << &*val << ">";
+            }
+            else if constexpr (std::is_same_v<std::decay_t<decltype(val)>, std::shared_ptr<Array>>) {
+                os << *val;
+            }
+            else {
+                os << val;
+            }
+        }, arr.data[i]);
+        if (i < arr.data.size() - 1) {
+            os << ", ";
+        }
+    }
+    os.put(']');
+    return os;
+}
 
 // 字典类 - 简化版本
 class Dict {
@@ -111,5 +135,14 @@ public:
     // 删除键
     void remove(const std::string& key) {
         data.erase(key);
+    }
+
+    // 获取全部键
+    Array keys() const {
+        Array a;
+        for (const auto& [key, value] : data) {
+            a.push(key);
+        }
+        return a;
     }
 };
