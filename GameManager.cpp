@@ -1,6 +1,7 @@
 // GameManager.cpp
 #include "GameManager.h"
 #include <iostream>
+#include <stdint.h>
 
 GameManager* GameManager::instance = nullptr;
 
@@ -61,6 +62,14 @@ void GameManager::update(double deltaTime) {
     if (!isRunning || isPaused) {
         return;
     }
+
+    static int32_t game_speed[] = {
+        0,
+        2000,
+        7500,
+        250,
+        125
+    };
     
     // 更新游戏tick
     currentTick += deltaTime * gameSpeed;
@@ -71,19 +80,19 @@ void GameManager::update(double deltaTime) {
     // etc...
 }
 
-int main() {
-    // 获取实例
-    GameManager* game = GameManager::getInstance();
+// int main() {
+//     // 获取实例
+//     GameManager* game = GameManager::getInstance();
     
-    // 初始化
-    game->initialize();
+//     // 初始化
+//     game->initialize();
     
-    // 测试输出
-    std::cout << "Hello World from GameManager!" << std::endl;
-    std::cout << "Current game speed: " << game->getGameSpeed() << std::endl;
+//     // 测试输出
+//     std::cout << "Hello World from GameManager!" << std::endl;
+//     std::cout << "Current game speed: " << game->getGameSpeed() << std::endl;
     
-    // 清理
-    game->cleanup();
+//     // 清理
+//     game->cleanup();
     
-    return 0;
-}
+//     return 0;
+// }

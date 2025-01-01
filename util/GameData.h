@@ -7,10 +7,7 @@ private:
     GameData() = default;
     
 public:
-    static GameData& getInstance() {
-        static GameData instance;
-        return instance;
-    }
+    static GameData& getInstance();
 
     GameData(const GameData&) = delete;
 

@@ -21,13 +21,35 @@ using Value = std::variant<
     std::shared_ptr<Dict>,    // 使用Dict而不是Dictionary
     std::shared_ptr<Array>
 >;
-
+class ArrayBuilder {
+    std::vector<Value> values;
+public:
+    ArrayBuilder(Value first) {
+        values.push_back(first);
+    }
+    
+    ArrayBuilder& operator,(Value next) {
+        values.push_back(next);
+        return *this;
+    }
+    
+    operator Array() {
+        Array arr;
+        for (const auto& v : values) {
+            arr.push(v);
+        }
+        return arr;
+    }
+};
 // 数组类 - 简化版本
 class Array {
 private:
     std::vector<Value> data;
 
 public:
+    ArrayBuilder operator[](Value first) {
+        return ArrayBuilder(first);
+    }
     // 添加元素
     void push(const Value& value) {
         data.push_back(value);
@@ -64,7 +86,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Array& arr);
 };
-std::ostream& operator<<(std::ostream& os, const Array& arr) {
+inline std::ostream& operator<<(std::ostream& os, const Array& arr) {
     os.put('[');
     for (size_t i = 0; i < arr.data.size(); i++) {
         std::visit([&os](const auto& val) {

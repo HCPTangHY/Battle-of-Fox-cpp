@@ -20,4 +20,10 @@ class Country: public BaseModel {
 
             return country;
         }
+        void update() {
+            auto c = get_game_dict()->get<std::shared_ptr<Dict>>("countries")->get<std::shared_ptr<Dict>>(this->countryID);
+            c->set("name", name);
+            c->set("is_ai", is_ai);
+            c->set("capitalPlanetID", capitalPlanetID);
+        }
 };

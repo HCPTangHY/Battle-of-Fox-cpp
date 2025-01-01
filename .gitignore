@@ -2,4 +2,5 @@
 *.dll
 *.lib
 *.pdb
+*.o
 .vscode
