@@ -1,8 +1,11 @@
 #include "util/Container.h"
 #include "util/GameData.h"
 #include "models/Country.h"
+#include "controllers/MapGenerater.h"
 #include <iostream>
+// #include "util/Voronoi.h"
 
+namespace BoF {
 int main() {
     system("chcp 65001");
     Dict root;  // 创建根字典
@@ -31,7 +34,19 @@ int main() {
     player1->set("level", 10);
     players.push(player1);
     GameData::getInstance().setRoot(root);
+    BoF::Dict grid = BoF::MapGenerater::generate_grid();
+    BoF::Array height = BoF::MapGenerater::heightmap_generate(grid);
+    std::cout << "高度图: " << height.size() << std::endl;
 
+    BoF::Dict cells = grid["cells"];
+    BoF::Array cellsI = cells["i"];
+    for (int i = 0; i < cellsI.size(); ++i) {
+        int cell_id = cellsI[i];
+        BoF::Dict cells = grid["cells"];
+        BoF::Array cellsV = cells["v"];
+        BoF::Array cellsVi = cellsV[i];
+        // int vertex_count = cellsVi.size();
+    }
     // 验证数据是否正确存储
     try {
         auto& gameData = GameData::getInstance();
@@ -49,4 +64,7 @@ int main() {
 
     return 0;
 }
-
+}
+int main() {
+    return BoF::main();
+}

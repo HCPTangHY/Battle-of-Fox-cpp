@@ -1,6 +1,7 @@
 #include "BaseModel.h"
 #include "../util/Container.h"
 
+namespace BoF {
 class Star : public BaseModel {
     public:
         std::string starID;
@@ -24,3 +25,4 @@ class Star : public BaseModel {
             return r;
         }
 };
+}

@@ -1,6 +1,7 @@
 #include "BaseModel.h"
 #include "../util/Container.h"
 
+namespace BoF {
 class Planet : public BaseModel{
 
     public:
@@ -14,3 +15,4 @@ class Planet : public BaseModel{
         Dict outputResources;
         Array transportRoutes;
 };
+}

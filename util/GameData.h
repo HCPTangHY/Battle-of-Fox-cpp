@@ -1,6 +1,7 @@
 #pragma once
 #include "Container.h"
 
+namespace BoF {
 class GameData {
 private:
     Dict root;
@@ -21,3 +22,4 @@ public:
         return root;
     }
 };
+}

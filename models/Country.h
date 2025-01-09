@@ -2,6 +2,7 @@
 #include "../util/Container.h"
 #include "../util/GameData.h"
 
+namespace BoF {
 class Country: public BaseModel {
     public:
         std::string countryID;
@@ -27,3 +28,4 @@ class Country: public BaseModel {
             c->set("capitalPlanetID", capitalPlanetID);
         }
 };
+}

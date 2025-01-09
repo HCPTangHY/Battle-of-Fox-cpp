@@ -1,6 +1,7 @@
 #include "../util/Container.h"
 #include "../util/GameData.h"
 
+namespace BoF {
 class BaseModel {
 
 public:
@@ -17,3 +18,5 @@ public:
 private:
     std::shared_ptr<Dict> target_dict;
 };
+
+}
