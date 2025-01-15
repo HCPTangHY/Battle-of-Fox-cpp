@@ -30,7 +30,7 @@ class Voronoi {
         int32_t triangle_of_edge(int32_t e) {return floor(e/3);}
         int32_t next_halfedge(int32_t e) {return (e%3 == 2)? e-2 : e+1;}
         int32_t prev_halfedge(int32_t e) {return (e%3 == 0)? e+2 : e-1;}
-        Array edges_of_triangle(int32_t t) {return Array::make(Value(t*3), Value(t*3+1), Value(t*3+2));}
+        Array edges_of_triangle(int32_t t) {return Array({(t*3), (t*3+1), (t*3+2)});}
         Array triangle_center(int32_t t);
         Array point_of_triangle(int32_t t);
         Array circumcenter(Array a, Array b, Array c);

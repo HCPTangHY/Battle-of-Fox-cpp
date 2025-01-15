@@ -11,56 +11,28 @@ int main() {
     Dict root;  // 创建根字典
 
     // 创建基础游戏信息
-    auto& game = root.dict("game");
-    game.set("name", "我的游戏");
-    game.set("version", 1.0);
-    game.set("active", true);
+    auto& game = root["game"];
+    game["name"] = "我的游戏";
+    game["version"] = 1.0;
+    game["active"] = true;
 
     // 创建国家数据
-    auto& countries = game.dict("countries");
+    auto& countries = game["countries"];
     
     // 添加一个示例国家
-    auto country1 = std::make_shared<Dict>();
-    country1->set("countryID", 1);
-    country1->set("name", "星海狐狸帝国");
-    country1->set("is_ai", false);
-    country1->set("capitalPlanetID", 100);
-    countries.set("1",country1);
+    auto country1 = json::make_dict();
+    country1["countryID"] = 1;
+    country1["name"] = "星海狐狸";
+    country1["is_ai"] = false;
 
-    // 创建玩家数据
-    auto& players = root.array("players");
-    auto player1 = std::make_shared<Dict>();
-    player1->set("name", "玩家1");
-    player1->set("level", 10);
-    players.push(player1);
     GameData::getInstance().setRoot(root);
-    BoF::Dict grid = BoF::MapGenerater::generate_grid();
-    BoF::Array height = BoF::MapGenerater::heightmap_generate(grid);
-    std::cout << "高度图: " << height.size() << std::endl;
 
-    BoF::Dict cells = grid["cells"];
-    BoF::Array cellsI = cells["i"];
-    for (int i = 0; i < cellsI.size(); ++i) {
-        int cell_id = cellsI[i];
-        BoF::Dict cells = grid["cells"];
-        BoF::Array cellsV = cells["v"];
-        BoF::Array cellsVi = cellsV[i];
-        // int vertex_count = cellsVi.size();
-    }
-    // 验证数据是否正确存储
-    try {
-        auto& gameData = GameData::getInstance();
-        auto storedRoot = gameData.getRoot();
-        
-        // 验证游戏信息
-        auto storedGame = storedRoot.get<std::shared_ptr<Dict>>("game");
-        std::cout << "游戏名称: " << storedGame->get<std::string>("name") << std::endl;
-        std::cout << storedGame->keys() << std::endl;
-        auto a = Country::get_by_id("1");
-        std::cout << "获取country1测试：" << a->name << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "错误: " << e.what() << std::endl;
-    }
+    BoF::Dict grid = BoF::MapGenerater::generate_grid();
+    Dict cells = grid["cells"];
+    cells["h"] = BoF::MapGenerater::heightmap_generate(grid,1000,1000);
+    grid["cells"] = cells;
+    Array paths = BoF::MapGenerater::heightmap_paths_calculate(grid);
+    std::cout << "高度图: " << paths.size() << std::endl;
 
     return 0;
 }

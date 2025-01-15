@@ -12,7 +12,7 @@ public:
         return GameData::getInstance().getRoot();
     }
     static std::shared_ptr<Dict> get_game_dict() {
-        return BaseModel::get_root().get<std::shared_ptr<Dict>>("game");
+        return BaseModel::get_root()["game"];
     }
     void update() {};
 private:
